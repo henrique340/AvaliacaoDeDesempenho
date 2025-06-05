@@ -12,6 +12,19 @@
   - Gere relatórios inteligentes com insights, matrizes de desempenho (ex: 9-box), e recomendações para desenvolvimento.
   - Promova a cultura de feedback contínuo, não só avaliações anuais.
   - Sirva como base para decisões de RH (promoções, PDI, desligamentos, etc.).
+
+## Tecnologias para Desenvolvimento
+- Back-end: Python (FastAPI)
+
+- Front-end: React.js
+
+- Banco de Dados: PostgreSQL
+
+- Autenticação e Permissões: OAuth
+
+- Dashboard/BI: Chart.js
+
+- Hospedagem: AWS
 ---
 
 ## 📄 Documentação
