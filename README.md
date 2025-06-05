@@ -16,5 +16,5 @@
 
 ## 📄 Documentação
 
-- [🧩 Problema identificado](docs/problema.md)
-- 
+- [Problema identificado](docs/problema.md)
+- [Requisitos do sistema](docs/requisitos.md)
