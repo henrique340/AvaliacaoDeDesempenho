@@ -31,3 +31,4 @@
 
 - [Problema identificado](docs/problema.md)
 - [Requisitos do sistema](docs/requisitos.md)
+- [Arquitetura](docs/arquitetura/)
