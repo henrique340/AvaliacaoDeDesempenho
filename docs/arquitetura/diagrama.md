@@ -1,144 +1,41 @@
-# Nome: Henrique Yuji Isogai Yoneoka
-# RA: 10418153
+```plantuml
+@startuml
+actor Organizador
+participant SistemaWTT
+participant Evento
+participant Workshop
+participant Aluno
 
-# Diagrama 
-``` mermaid
-classDiagram
-    class MEC {
-        +string nome
-        +regulamentar()
-    }
+Organizador -> SistemaWTT : getTotalParticipantes(eventoId)
 
-    class InstituicaoDeEnsinoSuperior {
-        +string nome
-        +string cnpj
-        +credenciarCurso()
-    }
+SistemaWTT -> Evento : getWorkshops()
+Evento --> SistemaWTT : listaWorkshops
 
-    class UnidadeAcademica {
-        +string nome
-        +int id
-        +gerenciarCursos()
-    }
+loop para cada Workshop
+    SistemaWTT -> Workshop : foiRealizado()
+    Workshop --> SistemaWTT : boolean
 
-    class Professor {
-        +string nome
-        +string matricula
-        +ensinar()
-        +avaliarAluno()
-    }
+    alt Workshop realizado
+        SistemaWTT -> Workshop : getParticipantes()
+        Workshop --> SistemaWTT : listaAlunos
 
-    class Aluno {
-        +string nome
-        +string matricula
-        +estudar()
-        +serAvaliado()
-    }
+        loop para cada Aluno
+            SistemaWTT -> Aluno : getNotaAtividade()
+            Aluno --> SistemaWTT : nota
 
-    class Avaliacao {
-        +int id
-        +string tipo
-        +date data
-        +double nota
-        +registrar()
-    }
+            alt nota > 7.0
+                SistemaWTT -> SistemaWTT : incrementa contador
+            else
+                ' nenhuma ação
+            end alt
+        end loop
 
-    class Curso {
-        +string nome
-        +string codigo
-        +string modalidade
-        +adicionarComponente()
-        +definirPPC()
-    }
+    else Workshop não realizado
+        ' ignorar
+    end alt
 
-    class ProjetoPedagogicoDeCurso {
-        +int id
-        +date dataAprovacao
-        +string objetivos
-        +validar()
-    }
+end loop
 
-    class DiretrizCurricularNacional {
-        +int id
-        +string descricao
-        +estabelecerPadroes()
-    }
-
-    class PerfilDeIngressante {
-        +int id
-        +string descricao
-    }
-
-    class PerfilDeEgresso {
-        +int id
-        +string descricao
-    }
-
-    class ComponenteCurricular {
-        +string nome
-        +string codigo
-        +int cargaHoraria
-        +verificarPreRequisitos()
-    }
-
-    class Ementa {
-        +int id
-        +string conteudoProgramatico
-        +string bibliografiaBasica
-        +definirConteudo()
-    }
-
-    class Competencia {
-        +int id
-        +string descricao
-        +string tipo
-    }
-    
-    class Turma {
-        +string codigo
-        +int numeroVagas
-        +string status
-        +matricularAluno()
-        +alocarProfessor()
-    }
-
-    class Aula {
-        +date data
-        +string assunto
-        +string local
-        +registrarFrequencia()
-    }
-
-    class Calendario {
-        +int ano
-        +string periodoLetivo
-        +estabelecerDatas()
-    }
-
-    %% Relacionamentos
-
-    MEC "1" -- "0..*" InstituicaoDeEnsinoSuperior : regula
-    InstituicaoDeEnsinoSuperior "1" -- "1..*" UnidadeAcademica : possui
-    UnidadeAcademica "1" -- "1..*" Curso : oferece
-    UnidadeAcademica "1" -- "0..*" ComponenteCurricular : oferece
-    
-    Curso "1" o-- "1" ProjetoPedagogicoDeCurso : possui
-    ProjetoPedagogicoDeCurso "1" -- "1" DiretrizCurricularNacional : segue
-    ProjetoPedagogicoDeCurso "1" o-- "1" PerfilDeIngressante : define
-    ProjetoPedagogicoDeCurso "1" o-- "1" PerfilDeEgresso : define
-    ProjetoPedagogicoDeCurso "1" o-- "0..*" Competencia : define
-
-    Curso "1" o-- "1..*" ComponenteCurricular : compoe
-    ComponenteCurricular "1" -- "1" Ementa : tem
-    ComponenteCurricular "1" -- "0..*" Competencia : desenvolve
-
-    Curso "1" o-- "1..*" Turma : oferece
-    Turma "1" -- "1..*" Aluno : matricula
-    Turma "1" -- "1" Professor : aloca
-    Turma "1" o-- "1..*" Aula : tem
-    
-    Aluno "1" -- "0..*" Avaliacao : éAvaliadoEm
-    Professor "1" -- "0..*" Avaliacao : realiza
-    
-    Calendario "1" -- "0..*" Turma : organiza
-    Calendario "1" -- "0..*" Aula : organiza
+SistemaWTT --> Organizador : totalParticipantes
+@enduml
+```
